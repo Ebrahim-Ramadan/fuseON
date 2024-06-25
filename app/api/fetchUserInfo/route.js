@@ -1,8 +1,9 @@
+import clientPromise from "@/lib/mongodb";
+
 export const dynamic = 'auto';
 
 
 
-import { usersCollection } from "@/app/api/cridentials";
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
@@ -15,7 +16,9 @@ export async function GET(request) {
             });
         }
 
-        
+        const client = await clientPromise;
+        const db = client.db('users');
+        const usersCollection = db.collection('users');
         // Fetch the document with the matching ID
         const userData = await usersCollection.findOne({ UniversityID: UniversityID });
 
