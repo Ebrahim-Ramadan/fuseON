@@ -1,3 +1,7 @@
+export const dynamic = 'force-dynamic';
+
+
+
 import { usersCollection } from "@/app/api/cridentials";
 export async function GET(request) {
     try {
