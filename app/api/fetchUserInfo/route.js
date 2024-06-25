@@ -2,15 +2,12 @@ import clientPromise from "@/lib/mongodb";
 
 export const dynamic = 'auto';
 
-
-
 export async function GET(request) {
-    if (request.method !== 'GET') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
-    }
     try {
-       
-        const { Email, Password } = await request.json();
+        const url = new URL(request.url);
+        const Email = url.searchParams.get('Email');
+        const Password = url.searchParams.get('Password');
+
         if (!Email || !Password) {
             return new Response(JSON.stringify({ error: 'Email and password are required' }), {
                 status: 400,
@@ -18,12 +15,10 @@ export async function GET(request) {
             });
         }
 
-
         const client = await clientPromise;
         const db = client.db('users');
         const usersCollection = db.collection('users');
-        // Fetch the document with the matching ID
-        const userData = await usersCollection.findOne({ Email:Email, Password:Password });
+        const userData = await usersCollection.findOne({ Email: Email, Password: Password });
 
         if (!userData) {
             return new Response(JSON.stringify({ error: 'User not found' }), {

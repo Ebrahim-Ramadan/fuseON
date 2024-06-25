@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
-import { ClosedEye, OpenEye } from '../Gloabals/globals';
+import { ClosedEye, OpenEye, Product } from '../Gloabals/globals';
 import axios from 'axios';
 
 
@@ -24,8 +24,12 @@ const Login = () => {
         Password,
         Email
       });
-      const { data } = await axios.get(`http://localhost:3000/api/fetchUserInfo`,{ params: { Email: Email, Password: Password } });
-      
+      // const data = await axios.get(`http://localhost:3000/api/fetchUserInfo`,{ Email: Email, Password: Password });
+      fetch(`http://localhost:3000/api/fetchUserInfo?Email=${Email}&Password=${Password}`)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+
       
   
         //  router.push('/');
@@ -41,7 +45,8 @@ const Login = () => {
   
   return (
     <div className="h-screen w-full flex justify-center flex-col items-center  gap-y-2">
-    <svg xmlns="http://www.w3.org/2000/svg" height="2rem" width="2rem" viewBox="0 0 512 512"><path fill="#ffffff" d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0h32c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64H64c123.7 0 224 100.3 224 224v32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320C100.3 320 0 219.7 0 96z"/></svg>
+    <Product/>
+
       <h1 className='text-4xl font-bold text-white'>Login</h1>
       <div className="flex flex-row text-white text-base font-semibold justify-start items-center gap-x-2">
   <p>Don&#8217;t have an account yet?</p>
@@ -52,7 +57,7 @@ const Login = () => {
       <form onSubmit={loginUser} className=" max-w-[500px] flex flex-col gap-y-4 w-full">
        
       <div className="w-full flex flex-col gap-y-2">
-        <label htmlFor="Email" className="text-xl font-medium text-white">
+        <label htmlFor="Email" className="text-base md:text-lg font-medium text-white">
           E-mail
         </label>
         <input
@@ -68,7 +73,7 @@ const Login = () => {
 
       
       <div className="w-full flex flex-col gap-y-2 relative">
-  <label htmlFor="password" className="text-lg md:text-xl font-medium text-white">
+  <label htmlFor="password" className="text-base md:text-lg font-medium text-white">
     Password
   </label>
   <div className="flex flex-col gap-y-4">
