@@ -5,6 +5,9 @@ export const dynamic = 'auto';
 
 
 export async function GET(request) {
+    if (request.method !== 'GET') {
+        return res.status(405).json({ error: 'Method Not Allowed' });
+    }
     try {
        
         const { Email, Password } = await request.json();
@@ -20,7 +23,7 @@ export async function GET(request) {
         const db = client.db('users');
         const usersCollection = db.collection('users');
         // Fetch the document with the matching ID
-        const userData = await usersCollection.findOne({ Email, Password });
+        const userData = await usersCollection.findOne({ Email:Email, Password:Password });
 
         if (!userData) {
             return new Response(JSON.stringify({ error: 'User not found' }), {

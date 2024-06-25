@@ -52,9 +52,9 @@ const Signup = () => {
     Log in
   </Link>
     </div>
-    <form onSubmit={registerUser} className="md:p-0 p-4 max-w-[500px] flex flex-col gap-y-4 w-full">
+    <form onSubmit={registerUser} className="md:p-0 p-4 max-w-[500px] flex flex-col gap-y-6 w-full">
       <div className="w-full flex flex-col gap-y-2">
-        <label htmlFor="Email" className="text-xl font-medium text-white">
+        <label htmlFor="Email" className="text-lg md:text-xl font-medium text-white">
           E-mail
         </label>
         <input
@@ -69,7 +69,7 @@ const Signup = () => {
       </div>
 
       <div className="w-full flex flex-col gap-y-2 relative">
-  <label htmlFor="password" className="text-xl font-medium text-white">
+  <label htmlFor="password" className="text-lg md:text-xl font-medium text-white">
     Password
   </label>
   <div className="flex flex-col gap-y-4">
@@ -97,7 +97,7 @@ const Signup = () => {
 </div>
 
       <div className="w-full flex flex-col gap-y-2">
-        <label htmlFor="UniversityID" className="text-xl font-medium text-white">
+        <label htmlFor="UniversityID" className="text-lg md:text-xl font-medium text-white">
           University ID
         </label>
         <div className="flex flex-col gap-y-4">
@@ -114,8 +114,8 @@ const Signup = () => {
         </div>
       </div>
       <div className="w-full flex flex-col gap-y-2">
-        <label htmlFor="UserName" className="text-xl font-medium text-white">
-          UserName
+        <label htmlFor="UserName" className="text-lg md:text-xl font-medium text-white">
+          User Name
         </label>
         <div className="flex flex-col gap-y-4">
           <input
@@ -130,12 +130,15 @@ const Signup = () => {
           
         </div>
       </div>
-        <div className="w-full flex justify-end">
+        <div className="w-full flex-col justify-end">
           <p className="text-sm md:text-base font-medium text-red-500">
           {ErrorMessage}  
           </p>
-        
+          <div className="text-gray-200 text-xs">
+          make sure to enter your data carefully, as you will not be able to change it afterwards
         </div>
+        </div>
+       
         <button role='submit' className='text-lg font-bold rounded-lg p-2 text-zinc-900 border border-2 bg-slate-200 hover:bg-zinc-300 duration-900' disabled={isLoading}>
           {isLoading ?
             'processing...' : 'Signup'}
