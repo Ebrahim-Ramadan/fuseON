@@ -6,19 +6,20 @@ export async function GET(request) {
     try {
         const url = new URL(request.url);
         const Email = url.searchParams.get('Email');
+        const UniversityID = url.searchParams.get('UniversityID');
         const Password = url.searchParams.get('Password');
 
-        if (!Email || !Password) {
-            return new Response(JSON.stringify({ error: 'Email and password are required' }), {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' },
-            });
-        }
+        // if (!Email || !Password) {
+        //     return new Response(JSON.stringify({ error: 'Email and password are required' }), {
+        //         status: 400,
+        //         headers: { 'Content-Type': 'application/json' },
+        //     });
+        // }
 
         const client = await clientPromise;
         const db = client.db('users');
         const usersCollection = db.collection('users');
-        const userData = await usersCollection.findOne({ Email: Email, Password: Password });
+        const userData = await usersCollection.findOne({ UniversityID:UniversityID });
 
         if (!userData) {
             return new Response(JSON.stringify({ error: 'User not found' }), {
