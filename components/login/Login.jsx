@@ -13,7 +13,12 @@ const Login = () => {
   const loginUser = async (email, password, e) => {
     e.preventDefault();
     setIsLoading(true);
-   
+    const { data } = await axios.get(`http://localhost:3000/api/fetchUserInfo`, {
+      UniversityID,
+      UserName,
+      Password,
+      Email
+    });
   };
 
   

@@ -6,21 +6,21 @@ export const dynamic = 'auto';
 
 export async function GET(request) {
     try {
-        const { searchParams } = new URL(request.url);
-        const UniversityID = searchParams.get('UniversityID');
-
-        if (!UniversityID) {
-            return new Response(JSON.stringify({ error: 'ID parameter is required' }), {
+       
+        const { Email, Password } = await request.json();
+        if (!Email || !Password) {
+            return new Response(JSON.stringify({ error: 'Email and password are required' }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' },
             });
         }
 
+
         const client = await clientPromise;
         const db = client.db('users');
         const usersCollection = db.collection('users');
         // Fetch the document with the matching ID
-        const userData = await usersCollection.findOne({ UniversityID: UniversityID });
+        const userData = await usersCollection.findOne({ Email, Password });
 
         if (!userData) {
             return new Response(JSON.stringify({ error: 'User not found' }), {

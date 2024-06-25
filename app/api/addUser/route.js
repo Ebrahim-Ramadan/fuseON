@@ -2,14 +2,10 @@ import clientPromise from "@/lib/mongodb";
 
 export async function POST(request) {
     try {
-        const { searchParams } = new URL(request.url);
-        const UniversityID = searchParams.get('UniversityID');
-        const UserName = searchParams.get('UserName');
-        const Email = searchParams.get('Email');
-        const Password = searchParams.get('Password');
+        const { UniversityID, UserName, Email, Password } = await request.json();
 
-        if (!UniversityID || !UserName) {
-            return new Response(JSON.stringify({ error: 'ID and UserName parameters are required' }), {
+        if (!UniversityID || !UserName || !Email || !Password) {
+            return new Response(JSON.stringify({ error: 'ID, Email, UserName and Password parameters are required' }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -23,7 +19,7 @@ export async function POST(request) {
         const existingUser = await usersCollection.findOne({ UniversityID: UniversityID });
         if (existingUser) {
             return new Response(JSON.stringify({ 
-                error: 'User with this UniversityID already exists',
+                error: 'User with this University ID already exists',
                 existingUser: existingUser
             }), {
                 status: 409,
